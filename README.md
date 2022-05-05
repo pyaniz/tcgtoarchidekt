@@ -20,9 +20,11 @@ python parcer.py
 ![image](https://user-images.githubusercontent.com/46324369/167026928-c04255a9-9e1e-4efe-9361-765977976e43.png)
 
 ## Commands
-I used Arg Parser to create some commands you can run:
-| Description | flag | Command | Default |
+| Description | Flag | Command | Default |
 | ----------- | ---- | ------- | ------- |
 | Detail cards being processed | -l | --log | *no default* |
 | Choose filename to READ, it will read the default if no flag used | -f | --filename | TCGplayer.csv |
 | Choose filename to WRITE, it will write to default if no flag used | -w | --write|archidekt.csv |
+
+## Error handling
+Any line that cannot be converted will be written to an errorfile and will **not** be included in the exported file.
