@@ -18,7 +18,7 @@ ffilename = args.write
 effilename = 'error_'+ffilename
 
 debugflag = args.logs
-print(debugflag)
+
 
 BASE_URL = "https://api.scryfall.com/cards"
 
@@ -33,6 +33,20 @@ def getcard(tcgid):
     except:
         return 'error'
 
+def promoprocess(name):
+    try:
+        response = requests.get(BASE_URL+"/search?unique=prints&name&q="+name)
+        jsoncard = json.loads(response.content)
+        for item in jsoncard["data"]:
+            for i in item:
+                if i == "promo_types":
+                    return item["id"]
+    except KeyboardInterrupt:
+        raise
+    except:
+        return 'error'
+    
+    
 
 def parser(csvFilePath,tfilename):
     try:
@@ -59,11 +73,21 @@ def parser(csvFilePath,tfilename):
                     if line == 'Product ID':
                         getcardcall = getcard(item["Product ID"])
                         if getcardcall == 'error':
-                            ex = item["Quantity"], item["Name"], item["Simple Name"], item["Set"]
-                            errows.append(ex)
-                            ercount = ercount+1
-                            if debugflag is True: 
-                                print("Error: " + item["Name"])
+                            promotest = promoprocess(item["Simple Name"])
+                            if promotest == "error":
+
+                                ex = item["Quantity"], item["Name"], item["Simple Name"], item["Set"]
+                                errows.append(ex)
+                                ercount = ercount+1
+                                if debugflag is True: 
+                                    print("Error: " + item["Name"])
+                            else:
+                                getcardcall = promotest
+                            lcount = lcount+1
+                            nline = item["Quantity"], item["Simple Name"], getcardcall
+                            if debugflag is True:
+                                print(nline)
+                            rows.append(nline)
                         else:
                             lcount = lcount+1
                             nline = item["Quantity"], item["Simple Name"], getcardcall
@@ -94,12 +118,13 @@ def parser(csvFilePath,tfilename):
                     str(ercount) + " lines could not be processed, check " + effilename
             
                 return message
+            else:
+                message = str(lcount) + " lines succesfully processed and written to " + ffilename
     except:
         return "Canceled by user"
 
         
-            
-
 
 if __name__ == '__main__':
     print(parser(filefrom,ffilename))
+#    print(promoprocess('Workshop Warchief'))
