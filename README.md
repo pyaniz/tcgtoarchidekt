@@ -22,6 +22,6 @@ python parcer.py
 ## Commands
 I used Arg Parser to create some commands you can run:
 
-|Detail cards being processed|-l|--log|*no default*|
-|Choose filename to READ, it will read the default if no flag used |-f|--filename|TCGplayer.csv|
-|Choose filename to WRITE, it will write to default if no flag used|-w|--write|archidekt.csv|
+| Detail cards being processed | -l | --log | *no default* |
+| Choose filename to READ, it will read the default if no flag used | -f | --filename | TCGplayer.csv |
+| Choose filename to WRITE, it will write to default if no flag used | -w | --write|archidekt.csv |
