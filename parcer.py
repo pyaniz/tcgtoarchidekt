@@ -52,7 +52,7 @@ def parser(csvFilePath,tfilename):
     try:
         jsonArray = []
     #   csv
-        fields = ['Quantity', 'Name', 'Scryfall ID']
+        fields = ['Quantity', 'Name', 'Scryfall ID','Printing']
         rows = []
         
         ercount = 0
@@ -84,13 +84,13 @@ def parser(csvFilePath,tfilename):
                             else:
                                 getcardcall = promotest
                             lcount = lcount+1
-                            nline = item["Quantity"], item["Simple Name"], getcardcall
+                            nline = item["Quantity"], item["Simple Name"], getcardcall, item["Printing"]
                             if debugflag is True:
                                 print(nline)
                             rows.append(nline)
                         else:
                             lcount = lcount+1
-                            nline = item["Quantity"], item["Simple Name"], getcardcall
+                            nline = item["Quantity"], item["Simple Name"], getcardcall, item["Printing"]
                             if debugflag is True:
                                 print(nline)
                             rows.append(nline)
