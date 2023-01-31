@@ -7,14 +7,16 @@ import argparse
 parser = argparse.ArgumentParser(description='Transform your TCG scanner output into an Archidekt compatible format')
 
 parser.add_argument("-f", "--filename", help="CSV from TCGapp", default="TCGplayer.csv")
-parser.add_argument("-w", "--write", help="Name of the file ro write", default="archidekt.csv")
+parser.add_argument("-w", "--write", help="Name of the file ro write", default="archi- + filename")
 parser.add_argument("-l", "--logs", help="Turn on log of cards scanned", action="store_true")
 
 args = parser.parse_args()
 
 filefrom = args.filename
 
-ffilename = args.write
+ffilename = 'archi-'+filefrom 
+
+
 effilename = 'error_'+ffilename
 
 debugflag = args.logs
@@ -52,7 +54,7 @@ def parser(csvFilePath,tfilename):
     try:
         jsonArray = []
     #   csv
-        fields = ['Quantity', 'Name', 'Scryfall ID']
+        fields = ['Quantity', 'Name', 'Scryfall ID','Printing']
         rows = []
         
         ercount = 0
@@ -84,13 +86,13 @@ def parser(csvFilePath,tfilename):
                             else:
                                 getcardcall = promotest
                             lcount = lcount+1
-                            nline = item["Quantity"], item["Simple Name"], getcardcall
+                            nline = item["Quantity"], item["Simple Name"], getcardcall, item["Printing"]
                             if debugflag is True:
                                 print(nline)
                             rows.append(nline)
                         else:
                             lcount = lcount+1
-                            nline = item["Quantity"], item["Simple Name"], getcardcall
+                            nline = item["Quantity"], item["Simple Name"], getcardcall, item["Printing"]
                             if debugflag is True:
                                 print(nline)
                             rows.append(nline)
